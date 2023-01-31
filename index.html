@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="fade hidden">
+    <div class="box form">
+        <input type="text" class="inp" id="gameInp" placeholder="name of game...">
+        <input type="text" class="inp" id="priceInp" placeholder="price of game...">
+        <input type="text" class="inp" id="minInp" placeholder="min numbers of person...">
+        <input type="text" class="inp" id="maxInp" placeholder="max numbers of person...">
+        <div class="flex-row"><label for="isEnableInp">IsEnable: </label> <input type="checkbox" id="isEnableInp" class="checkbox"></div>
+        <div class="flex-row justify-center">
+            <button class="btn add">Add</button>
+            <button class="close btn">Close</button>
+        </div>
+        <div class="box errors hidden">
+        </div>
+    </div>
+    <div class="box line hidden">
+
+    </div>
+</div>
+<div class="container">
+    <div class="saleTicket box">
+        <h4 class="title">Ticket Sales</h4>
+        <button class="btn saleTicket">Sale a ticket</button>
+        <button class="btn showLast10">Show the best customers</button>
+    </div>
+    <div class="box">
+        <h3 class="title">Manage Games</h3>
+        <div class="games">
+            <button class="btn">Game1</button>
+            <button class="btn">Game2</button>
+        </div>
+        <button class="btn addGame">Add a Game</button>
+    </div>
+</div>
+<script type="module" src="assets/script.js"></script>
+</body>
+</html>

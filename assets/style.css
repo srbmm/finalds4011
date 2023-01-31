@@ -1,0 +1,116 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 1.05em;
+}
+body{
+    background: #625F63;
+}
+.container{
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    background: #BBBDF6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.games{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.5rem;
+}
+.btn{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: rgba(45, 178, 123, 0.91);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.btn:hover{
+    background: #2bbd81;
+}
+.games > button{
+    background: rgba(255, 168, 194, 0.8);
+}
+.games > button:hover{
+    background: #FFA8C2;
+}
+.fade{
+    /* From https://css.glass */
+    background: rgba(99, 99, 99, 0.29);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    border: 1px solid rgba(99, 99, 99, 0.3);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.hidden{
+    display: none;
+}
+.close{
+    background: rgba(164, 0, 49, 0.8);
+    width: 80px;
+}
+.close:hover{
+    background: #8f0419;
+}
+.form, .line{
+    width: 30rem;
+}
+.flex-row{
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.justify-center{
+    justify-content: center;
+}
+.inp{
+    border: None;
+    outline: none;
+    cursor: pointer;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    background: rgba(255, 255, 255, 0.58);
+}
+.inp:focus{
+    transition: 0.5s;
+    background: rgba(255, 255, 255);
+}
+input[type='checkbox'] {
+    width:20px;
+    height:20px;
+    opacity: 0.75;
+    accent-color: #48986d;
+}
+input[type='checkbox']:hover {
+    transition: 0.5s;
+    opacity: 1;
+}
+.title{
+    align-self: flex-start;
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    background: #9691D9;
+}
+.errors{
+    background: #b22b46;
+}
