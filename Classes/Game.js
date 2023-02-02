@@ -1,27 +1,33 @@
-class Game{
-    constructor(name, price, min, max, isEnable) {
+import LinkedList from "./../DS/LinkedList.js";
+class Game {
+    constructor(name, price, min, max, isEnable, id) {
         this.name = name;
         this.price = price;
         this.min = min;
         this.max = max;
         this.isEnable = isEnable;
+        this.id = id;
     };
 }
-class Games{
+
+class Games {
     #gameList;
     constructor() {
-        this.#gameList = []
+        this.counter = 0;
+        this.#gameList = new LinkedList();
     }
-    #isSameName(name){
-        let flag = false;
+
+    #isSameName(name) {
         this.#gameList.forEach(item => {
-            if(name === item.name) flag = true;
+            console.log("d")
+            if (name === item.name) return true;
         });
-        return flag;
+        return false;
     }
-    addGame(name, price, min, max, check){
-        let err = "";
-        if(name && price && min && max) {
+
+    #checkValue(name, price, min, max) {
+        let err = ""
+        if (name && price && min && max) {
             price = Number(price);
             min = Number(min);
             max = Number(max);
@@ -33,16 +39,43 @@ class Games{
             if (min <= 0) err += "<br>Error: Min cannot be zero or negative.";
             if (max <= 0) err += "<br>Error: Max cannot be zero or negative.";
             if (max < min) err += "<br>Error: Min cannot be bigger than max.";
-        }else {
+        } else {
             err = "Please enter all input values."
         }
-        if(!err)
-            this.#gameList.push(new Game(name, price, min, max, check));
-        return err
+        return err;
     }
-    forEach(func){
+
+    addGame(name, price, min, max, check) {
+        const err = this.#checkValue(name, price, min, max)
+        let id;
+        if (!err)
+            id = this.counter++;
+            this.#gameList.add_last(new Game(name, price, min, max, check, id));
+        return [err, id]
+    }
+
+    editGame(name, price, min, max, check, id) {
+        const err = this.#checkValue(name, price, min, max);
+        if (!err) {
+            this.#gameList.forEach(game => {
+                if (id === game.id){
+                    game.name = name;
+                    game.price = price;
+                    game.min = min;
+                    game.max = max;
+                    game.isEnable = check;
+                    return "";
+                }
+            });
+        }
+        return err;
+    }
+    forEach(func) {
         this.#gameList.forEach(func)
     }
-    get size() { return this.#gameList.length; }
+    get size() {
+        return this.#gameList.length;
+    }
 }
+
 export default Games;
