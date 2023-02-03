@@ -10,6 +10,7 @@ const gameInp = document.querySelector("#gameInp");
 const priceInp = document.querySelector("#priceInp");
 const maxInp = document.querySelector("#maxInp");
 const minInp = document.querySelector("#minInp");
+const timeInp = document.querySelector("#timeInp");
 const isEnableInp = document.querySelector("#isEnableInp");
 const errors = document.querySelector(".errors");
 const showLog = document.querySelector("#showLog");
@@ -18,8 +19,8 @@ const mainTimerDiv = document.querySelector(".mainTimer");
 const saleTicketBtn = document.querySelector("#saleTicket");
 const buyTicket = document.querySelector("#buyTicket");
 const closeBuyTicket = document.querySelector("#closeBuyTicket");
-const gamesBuyElement = document.querySelector("#gamesBuyElement");
-
+const gamesBuyInput = document.querySelector("#gamesBuyInput");
+const addTicket = document.querySelector("#addTicket");
 let Mode = "";
 let ID = -1;
 const games = new Games();
@@ -36,9 +37,24 @@ renderGames();
 
 function renderGames() {
     gamesName.innerHTML = "";
-    gamesBuyElement.innerHTML = "";
+    gamesBuyInput.innerHTML = "";
+    let flagIsAddTicket = false;
     games.forEach((item) => {
-
+        const divInp = document.createElement("div");
+        divInp.classList.add("flex-row");
+        const labelInp = document.createElement("label");
+        labelInp.textContent = `${item.name}: `;
+        divInp.appendChild(labelInp);
+        const inp = document.createElement("input");
+        inp.classList.add("inp");
+        inp.type = "number";
+        inp.min = "0";
+        inp.value = "0";
+        if (item.isEnable) flagIsAddTicket = true;
+        inp.disabled = !item.isEnable;
+        inp.id = `gameInp-${item.id}`;
+        divInp.appendChild(inp);
+        gamesBuyInput.appendChild(divInp);
         const gameBtn = document.createElement("button");
         gameBtn.classList.add("btn");
         gameBtn.textContent = item.name;
@@ -47,12 +63,10 @@ function renderGames() {
             btn.classList.add("btn");
             btn.textContent = "Show Logs";
             btn.addEventListener("click", ev => {
-                console.log(displays);
                 displays.classList.remove("hidden");
                 document.querySelector(`#display-${item.id}`).classList.remove("hidden");
                 const temp = document.createElement("p");
                 temp.textContent = "logged";
-                console.log(`display-${item.id}`);
                 document.querySelector(`#display-${item.id} > .logs`).appendChild(temp);
             });
             btn.id = `btn-${item.id}`;
@@ -65,10 +79,12 @@ function renderGames() {
             priceInp.value = item.price;
             maxInp.value = item.max;
             minInp.value = item.min;
+            timeInp.value = item.time;
             isEnableInp.checked = item.isEnable;
         });
         gamesName.appendChild(gameBtn);
     });
+    addTicket.disabled = !flagIsAddTicket;
 }
 
 function resetForm() {
@@ -81,9 +97,9 @@ function resetForm() {
     priceInp.value = "";
     maxInp.value = "";
     minInp.value = "";
+    timeInp.value = "";
     isEnableInp.checked = false;
     if(ID !== -1) {
-        console.log(document.querySelector(`#display-${ID}`));
         document.querySelector(`#display-${ID}`).classList.add("hidden");
         document.querySelector(`#btn-${ID}`).remove();
     }
@@ -97,12 +113,11 @@ function resetFormBuyTicket(){
 addGames.addEventListener("click", ev => {
     fade.classList.remove("hidden");
     Mode = "add";
-    renderGames();
 });
 
 addBtn.addEventListener("click", ev => {
     if (Mode === "add") {
-        const [err, id] = games.addGame(gameInp.value, priceInp.value, minInp.value, maxInp.value, isEnableInp.checked);
+        const [err, id] = games.addGame(gameInp.value, priceInp.value, minInp.value, maxInp.value, timeInp.value, isEnableInp.checked);
         if (err) {
             errors.innerHTML = err;
             errors.classList.remove("hidden");
@@ -119,7 +134,6 @@ addBtn.addEventListener("click", ev => {
                 document.querySelector(`#display-${id}`).classList.add("hidden");
                 displays.classList.add("hidden");
             });
-
             const nameAndClose = document.createElement("div");
             nameAndClose.classList.add("nameAndClose");
             nameAndClose.appendChild(h3);
@@ -138,7 +152,7 @@ addBtn.addEventListener("click", ev => {
             resetForm();
         }
     } else if (Mode === "edit") {
-        const err = games.editGame(gameInp.value, priceInp.value, minInp.value, maxInp.value, isEnableInp.checked, ID);
+        const err = games.editGame(gameInp.value, priceInp.value, minInp.value, maxInp.value,timeInp.value, isEnableInp.checked, ID);
         if (err) {
             errors.innerHTML = err;
             errors.classList.remove("hidden");
