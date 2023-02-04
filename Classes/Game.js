@@ -1,29 +1,32 @@
+import DynamicHashtable from "./../DS/DynamicHashtable.js";
 import LinkedList from "./../DS/LinkedList.js";
 class Game {
-    constructor(name, price, min, max,time, isEnable,id) {
+    constructor(name, price, min, max,time, isEnable) {
         this.name = name;
         this.price = price;
         this.min = min;
         this.max = max;
         this.time = time;
         this.isEnable = isEnable;
-        this.id = id;
+        this.isPlay = false;
+        this.gameQueue = new LinkedList();
     };
+
+    addToQueue(){
+        lin
+    }
+
 }
 
 class Games {
     #gameList;
     constructor() {
         this.counter = 0;
-        this.#gameList = new LinkedList();
+        this.#gameList = new DynamicHashtable();
     }
 
     #isSameName(name) {
-        let flag = false;
-        this.#gameList.forEach(item => {
-            if (name === item.name) flag = true;
-        });
-        return flag;
+       return this.#gameList.find(name)
     }
 
     #checkValue(name, price, min, max,time, edit) {
@@ -51,28 +54,27 @@ class Games {
 
     addGame(name, price, min, max, time, check) {
         const err = this.#checkValue(name, price, min, max, time)
-        let id;
+        let game = undefined;
         if (!err) {
-            id = this.counter++;
-            this.#gameList.add_last(new Game(name, price, min, max,time, check, id));
+            game = new Game(name, price, min, max,time, check)
+            this.#gameList.add(name, game);
         }
-        return [err, id]
+        return [err, game]
     }
 
-    editGame(name, price, min, max, time, check, id) {
+    editGame(editedName, price, min, max, time, check, name) {
         const err = this.#checkValue(name, price, min, max, time,true);
         if (!err) {
-            this.#gameList.forEach(game => {
-                if (id === game.id){
-                    game.name = name;
-                    game.price = price;
-                    game.min = min;
-                    game.max = max;
-                    game.time = time;
-                    game.isEnable = check;
-                    return "";
-                }
-            });
+            const game = this.#gameList.find(name);
+            if(game){
+                game.name = name;
+                game.price = price;
+                game.min = min;
+                game.max = max;
+                game.time = time;
+                game.isEnable = check;
+                return "";
+            }
         }
         return err;
     }

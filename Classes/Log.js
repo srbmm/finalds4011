@@ -23,10 +23,10 @@ class Log{
         return [min, sec]
     }
     get startStr(){
-        return this.toString(this.start)
+        return this.#toString(this.start)
     }
     get endStr(){
-        if(this.end !== undefined) return this.toString(this.end)
+        if(this.end !== undefined) return this.#toString(this.end)
         return undefined
     }
     get timeStr(){

@@ -1,3 +1,4 @@
+
 class Node{
     constructor(value) {
         this.value = value
@@ -68,23 +69,43 @@ class LinkedList{
     }
 
     delete_last(){
-        if(this.last !== undefined) {
-            this.last = this.last.before
-            this.last.next = undefined
-            this.size--
-            return true
-        }else {
+        if(this.size > 1){
+            if(this.last !== undefined) {
+                this.last = this.last.before
+                this.last.next = undefined
+                this.size--;
+                return true
+            }else {
+                return false
+            }
+        }else{
+            if(this.size === 1){
+                this.first = undefined;
+                this.last = undefined
+                this.size--;
+                return true;
+            }
             return false
         }
     }
 
     delete_first(){
-        if(this.first !== undefined){
-            this.first = this.first.next
-            this.first.before = undefined
-            this.size--
-            return true
-        }else {
+        if(this.size > 1){
+            if(this.first !== undefined){
+                this.first = this.first.next
+                this.first.before = undefined
+                this.size--
+                return true
+            }else {
+                return false
+            }
+        }else{
+            if(this.size === 1){
+                this.first = undefined;
+                this.last = undefined;
+                this.size--;
+                return true;
+            }
             return false
         }
     }
@@ -137,4 +158,5 @@ class LinkedList{
         }
     }
 }
+
 export default LinkedList;
