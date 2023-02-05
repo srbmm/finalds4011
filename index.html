@@ -13,14 +13,25 @@
 
 <!-- Displays -->
 <div class="displays hidden">
+    <div class="display" id="secondDisplay">
+        <div class="nameAndClose"><h3 id="secondDisplayTitle">test</h3><button class="btn closeDisplay" id="secondDisplayClose">X</button></div>
+        <div class="logs" id="secondDisplayLogsDiv"></div>
+    </div>
 </div>
 
 <!-- Buy Ticket Form -->
 <div class="fade hidden" id="buyTicket">
     <div class="box form">
+        <div class="finded1 hidden flex-column" id="findedBuyTicketDiv">
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+        </div>
         <input type="text" class="inp" id="buyTicketNC" placeholder="code">
         <div class="flex-column" id="gamesBuyInput">
-            <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="1" placeholder="">
+            <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="1">
             <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="2">
         </div>
         <div class="flex-row justify-center">
@@ -31,10 +42,35 @@
 
 </div>
 
+
+<!-- Use Ticket Form -->
+<div class="fade hidden" id="useTicket">
+    <div class="box form">
+        <div class="finded1 hidden flex-column" id="findedUseTicketDiv">
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+            <button class="btn">test1</button>
+        </div>
+        <input type="text" class="inp" id="div" placeholder="code">
+        <div class="flex-column" id="gamesBuyInput">
+            <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="1">
+            <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="2">
+        </div>
+        <div class="flex-row justify-center">
+            <button class="btn" id="addTicket">Add</button>
+            <button class="close btn" id="closeBuyTicket">Close</button>
+        </div>
+    </div>
+
+</div>
+
+
 <!-- Add Game Form -->
 <div class="fade hidden" id="addGame">
     <div class="box form" id="addGameForm">
-        <button class="btn hidden" id="showLog">Show logs</button>
+        <button class="btn" id="showLog">Show logs</button>
         <input type="text" class="inp" id="gameInp" placeholder="name of game...">
         <input type="text" class="inp" id="priceInp" placeholder="price of game...">
         <input type="text" class="inp" id="timeInp" placeholder="time of game...">
@@ -59,6 +95,10 @@
         <button class="btn" id="showLast10">Show the best customers</button>
         <button class="btn" id="playGame">Play!</button>
         <input type="text" id="findPersonNC" class="inp" placeholder="Enter National Code...">
+        <div class="finded2 hidden flex-column" id="findedDivMain">
+            <button class="btn">123</button>
+            <button class="btn">123</button>
+        </div>
     </div>
 
     <!-- Manage Box -->
@@ -70,6 +110,16 @@
         </div>
         <button class="btn addGame">Add a Game</button>
     </div>
+
+</div>
+
+<!-- Main Display-->
+<div class="mainDisplay">
+<div class="display">
+    <div class="nameAndClose"><h3>Main Display</h3></div>
+    <div class="logs" id="mainDisplay">
+    </div>
+</div>
 </div>
 <script type="module" src="./assets/script.js"></script>
 </body>

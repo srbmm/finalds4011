@@ -21,10 +21,12 @@ class DHashtable{
         let index = this.hashFunc(key, i++);
         while (this.array[index] !== undefined && this.array[index] !== null) {index = this.hashFunc(key, i++);
         }
-        this.array[index] = new Node(key, value);
+        const node = new Node(key, value);
+        this.array[index] = node;
         this.keys.add_last(key);
         this.hashSize += 1;
         if (this.hashSize === this.arraySize) this.extend();
+        return node.value;
     }
 
     delete(key) {
@@ -47,7 +49,6 @@ class DHashtable{
     }
 
     hashFunc(key, i = 0){
-
         if (typeof key === "number"){
             let index = (key % this.arraySize) + (i)
             while(index >= this.arraySize){
@@ -122,8 +123,6 @@ class DHashtable{
     getHash(){
         return this.array
     }
-
-
 }
 
 export default DHashtable;

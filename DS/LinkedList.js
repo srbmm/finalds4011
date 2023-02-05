@@ -1,4 +1,3 @@
-
 class Node{
     constructor(value) {
         this.value = value
@@ -37,7 +36,7 @@ class LinkedList{
             this.first.before = node
             this.first = node
         }
-        this.size++
+        this.size++;
     }
 
     add(index, ...args){
@@ -62,56 +61,62 @@ class LinkedList{
             counter++
             head = head.next
             }
-            this.size++
+            this.size++;
         }else {
             console.log('Error in add.')
         }
     }
 
     delete_last(){
+        let node;
         if(this.size > 1){
             if(this.last !== undefined) {
-                this.last = this.last.before
+                node = this.last;
+                this.last = this.last.before;
                 this.last.next = undefined
                 this.size--;
-                return true
+                return node
             }else {
-                return false
+                return node;
             }
         }else{
             if(this.size === 1){
+                node = this.last;
                 this.first = undefined;
                 this.last = undefined
                 this.size--;
-                return true;
+                return node;
             }
-            return false
+            return node;
         }
     }
 
     delete_first(){
+        let node;
         if(this.size > 1){
             if(this.first !== undefined){
+                node = this.first;
                 this.first = this.first.next
                 this.first.before = undefined
                 this.size--
-                return true
+                return node;
             }else {
-                return false
+                return node;
             }
         }else{
             if(this.size === 1){
+                node = this.first;
                 this.first = undefined;
                 this.last = undefined;
                 this.size--;
-                return true;
+                return node;
             }
-            return false
+            return node;
         }
     }
 
     delete(value, type="value"){
-        let flag = false
+        let node;
         let head = this.first
         if (this.first[type] === value) this.delete_first()
         else if (this.last[type] === value) this.delete_last()
@@ -120,14 +125,14 @@ class LinkedList{
                 if (head[type] === value) {
                     head.before.next = head.next
                     head.next.before = head.before
-                    this.size--
-                    flag = true
+                    this.size--;
+                    node = head;
                     break
                 }
                 head = head.next
             }
         }
-        return flag
+        return node;
     }
 
     forEach(func) {
