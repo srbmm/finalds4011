@@ -14,7 +14,7 @@ class LinkedList{
         this.size = 0;
     }
     add_last(){
-        const node = new this.NodeClass(...arguments)
+        const node = new this.NodeClass(...arguments);
         if (this.first === undefined){
             this.first = node
             this.last = node
@@ -148,18 +148,6 @@ class LinkedList{
         while(head !== undefined){
             func(head);
             head = head.next;
-        }
-    }
-
-    show(type){
-        if(this.first instanceof Node){
-            type = 'value'
-        }
-        let head = this.first
-        while (head !== undefined){
-            if (type !== undefined) console.log(head[type])
-            else console.log(head)
-            head = head.next
         }
     }
 }

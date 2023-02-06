@@ -40,10 +40,9 @@ class Logs {
                 this.isRun = false;
                 const item = this.logs.delete_last().value;
                 const msg = `<br>${item.logStr}`;
-                item.ticket.person.addLog(msg);
+                item.ticket?.person.addLog(msg);
                 item.doAfter(log => {
-                    console.log(log);
-                    this.logs.add_last(log)
+                    if(log instanceof Log) this.logs.add_last(log)
                 });
                 this.strFinishedLogs += msg;
                 return item;
@@ -98,7 +97,7 @@ class Log {
     }
 
     get logStr() {
-        return `${this.startStr} - ${this.endStr} # ${this.ticket.person?.code}  ${this.type}  ${this.ticket.game ? "for " + this.ticket.game.name : ""} --- time-expend: ${this.timeStr}`
+        return `${this.startStr} - ${this.endStr} # ${this.ticket? this.ticket.person.code:""}  ${this?.type}  ${this?.ticket?.game ? "for " + this.ticket?.game?.name : ""} ${this?.ticket?.number ? this?.ticket?.number + " ticket" : ""} --- time-expend: ${this.timeStr}`
     }
 
 }

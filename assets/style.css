@@ -43,10 +43,10 @@ body{
     background: #2bbd81;
 }
 .games > button{
-    background: rgba(255, 168, 194, 0.8);
+    background: rgba(148, 33, 190, 0.8);
 }
 .games > button:hover{
-    background: #FFA8C2;
+    background: #9510c0;
 }
 .fade{
     /* From https://css.glass */
@@ -227,6 +227,9 @@ input[type='checkbox']:hover {
 .finded1  > .btn:hover, .finded2 > .btn:hover{
     transition: 0.25s;
     background: rgba(234, 233, 233, 0.85);
+}
+.option{
+    background: red;
 }
 .hidden{
     display: none;

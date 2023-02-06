@@ -14,7 +14,9 @@
 <!-- Displays -->
 <div class="displays hidden">
     <div class="display" id="secondDisplay">
-        <div class="nameAndClose"><h3 id="secondDisplayTitle">test</h3><button class="btn closeDisplay" id="secondDisplayClose">X</button></div>
+        <div class="nameAndClose"><h3 id="secondDisplayTitle">test</h3>
+            <button class="btn closeDisplay" id="secondDisplayClose">X</button>
+        </div>
         <div class="logs" id="secondDisplayLogsDiv"></div>
     </div>
 </div>
@@ -34,9 +36,13 @@
             <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="1">
             <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="2">
         </div>
+        <div><label>VIP: </label><input type="checkbox" id="buyCheck"></div>
         <div class="flex-row justify-center">
             <button class="btn" id="addTicket">Add</button>
             <button class="close btn" id="closeBuyTicket">Close</button>
+        </div>
+        <div class="box errors hidden" id="addTicketErrors">
+            Error in add tickets.
         </div>
     </div>
 
@@ -53,17 +59,41 @@
             <button class="btn">test1</button>
             <button class="btn">test1</button>
         </div>
-        <input type="text" class="inp" id="div" placeholder="code">
-        <div class="flex-column" id="gamesBuyInput">
-            <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="1">
-            <label>name1 : </label><input min="0" value="0" type="number" class="inp" id="2">
-        </div>
+        <input type="text" class="inp" id="codeUseTicket" placeholder="code">
+        <select class="flex-column" id="useSelect">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+        <input type="number" class="inp" id="numberOfUseTickets" placeholder="number">
         <div class="flex-row justify-center">
-            <button class="btn" id="addTicket">Add</button>
-            <button class="close btn" id="closeBuyTicket">Close</button>
+            <button class="btn" id="useTicketBtn">Use</button>
+            <button class="close btn" id="closeUseTicket">Close</button>
+        </div>
+        <div class="box errors hidden" id="useErrors">
+            Error in use tickets.
         </div>
     </div>
 
+</div>
+
+<!-- Show Best -->
+<div class="fade hidden" id="showBest">
+    <div class="box form">
+        <button class="close btn" id="closeShowBest">close</button>
+        <div class="flex-column" id="btnsShowBest">
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+            <button class="btn">2283602831</button>
+        </div>
+    </div>
 </div>
 
 
@@ -76,12 +106,13 @@
         <input type="text" class="inp" id="timeInp" placeholder="time of game...">
         <input type="text" class="inp" id="minInp" placeholder="min numbers of person...">
         <input type="text" class="inp" id="maxInp" placeholder="max numbers of person...">
-        <div class="flex-row"><label for="isEnableInp">IsEnable: </label> <input type="checkbox" id="isEnableInp" class="checkbox"></div>
+        <div class="flex-row"><label for="isEnableInp">IsEnable: </label> <input type="checkbox" id="isEnableInp"
+                                                                                 class="checkbox"></div>
         <div class="flex-row justify-center">
             <button class="btn add">Add</button>
             <button class="close btn" id="closeAddGameForm">Close</button>
         </div>
-        <div class="box errors hidden">
+        <div class="box errors hidden" id="addErrors">
         </div>
     </div>
 </div>
@@ -115,11 +146,11 @@
 
 <!-- Main Display-->
 <div class="mainDisplay">
-<div class="display">
-    <div class="nameAndClose"><h3>Main Display</h3></div>
-    <div class="logs" id="mainDisplay">
+    <div class="display">
+        <div class="nameAndClose"><h3>Main Display</h3></div>
+        <div class="logs" id="mainDisplay">
+        </div>
     </div>
-</div>
 </div>
 <script type="module" src="./assets/script.js"></script>
 </body>

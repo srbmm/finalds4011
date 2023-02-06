@@ -61,7 +61,7 @@ class DHashtable{
             for(let j = 0; j < len; j++){
                 index = key[j].charCodeAt(0) * j;
             }
-            index = index + (i**2)
+            index = index + (i)
             while(index >= this.arraySize){
                 index -= this.arraySize
             }

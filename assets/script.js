@@ -14,7 +14,7 @@ const maxInp = document.querySelector("#maxInp");
 const minInp = document.querySelector("#minInp");
 const timeInp = document.querySelector("#timeInp");
 const isEnableInp = document.querySelector("#isEnableInp");
-const errors = document.querySelector(".errors");
+const errors = document.querySelector("#addErrors");
 const showLog = document.querySelector("#showLog");
 const displays = document.querySelector(".displays");
 const mainTimerDiv = document.querySelector(".mainTimer");
@@ -32,6 +32,22 @@ const secondDisplayLogsDiv = document.querySelector("#secondDisplayLogsDiv");
 const mainDisplay = document.querySelector("#mainDisplay");
 const findedMainDiv = document.querySelector("#findedDivMain");
 const findedBuyTicketDiv = document.querySelector("#findedBuyTicketDiv");
+const useTicket = document.querySelector("#useTicket");
+const findedUseTicketDiv = document.querySelector("#findedUseTicketDiv");
+const codeUseTicket = document.querySelector("#codeUseTicket");
+const useSelect = document.querySelector("#useSelect");
+const useTicketBtn = document.querySelector("#useTicketBtn");
+const closeUseTicket = document.querySelector("#closeUseTicket");
+const playGame = document.querySelector("#playGame");
+const addTicketErrors = document.querySelector("#addTicketErrors");
+const useErrors = document.querySelector("#useErrors");
+const numberOfUseTickets = document.querySelector("#numberOfUseTickets");
+const showLast10 = document.querySelector("#showLast10");
+const showBest = document.querySelector("#showBest");
+const closeShowBest = document.querySelector("#closeShowBest");
+const btnsShowBest = document.querySelector("#btnsShowBest");
+const buyCheck = document.querySelector("#buyCheck");
+
 let Mode = "";
 let GameToEdit = "";
 const games = new Games();
@@ -48,11 +64,7 @@ const mainTimer = setInterval(() => {
     if (secondDisplayLogs) {
         changeSecondDisplayData(secondDisplayLogs.showLogs)
     }
-    let sec = time % 60;
-    let min = Math.floor(time / 60);
-    sec = sec < 10 ? `0${sec}` : sec
-    min = min < 10 ? `0${min}` : min
-    mainTimerDiv.textContent = `${min} : ${sec}`;
+    renderTime();
     time += 1;
 }, 1000);
 
@@ -63,14 +75,19 @@ renderGames();
 function renderGames() {
     gamesName.innerHTML = "";
     gamesBuyInput.innerHTML = "";
+    useSelect.innerHTML = "";
     let flagIsAddTicket = false;
     games.forEach((key, item) => {
         const gameBtn = makeGameBtn(item);
         gamesName.appendChild(gameBtn);
         const gameBuyInp = makeGameBuyInp(item);
         gamesBuyInput.appendChild(gameBuyInp);
-        if (item.isEnable) flagIsAddTicket = true;
+        if (item.isEnable) {
+            useSelect.append(makeOptionTag(key));
+            flagIsAddTicket = true;
+        }
     });
+    useTicketBtn.disabled = !flagIsAddTicket;
     addTicket.disabled = !flagIsAddTicket;
 }
 
@@ -90,7 +107,6 @@ addBtn.addEventListener("click", ev => {
         } else {
             errors.classList.add("hidden");
             fade.classList.add("hidden");
-
             renderGames();
             resetForm();
         }
@@ -122,7 +138,7 @@ secondDisplayClose.addEventListener("click", ev => {
     hiddenSecondDisplay()
 })
 
-
+// Trie Tree Search Events
 findPersonNC.addEventListener("keyup", ev => {
     if (ev.target.value) {
         const listOfCode = persons.search(ev.target.value);
@@ -145,7 +161,6 @@ findPersonNC.addEventListener("keyup", ev => {
         findedMainDiv.classList.add("hidden");
     }
 });
-
 buyTicketNC.addEventListener("keyup", ev => {
     if (ev.target.value) {
         const listOfCode = persons.search(ev.target.value);
@@ -167,6 +182,29 @@ buyTicketNC.addEventListener("keyup", ev => {
         });
     } else {
         findedBuyTicketDiv.classList.add("hidden");
+    }
+});
+codeUseTicket.addEventListener("keyup", ev => {
+    if (ev.target.value) {
+        const listOfCode = persons.search(ev.target.value);
+        findedUseTicketDiv.innerHTML = "";
+        if (listOfCode) {
+            if (listOfCode.size > 0) {
+                findedUseTicketDiv.classList.remove("hidden");
+            } else {
+                findedUseTicketDiv.classList.add("hidden");
+            }
+        } else {
+            findedUseTicketDiv.classList.add("hidden");
+        }
+        listOfCode?.forEach(code => {
+            findedUseTicketDiv.appendChild(makeFindedBtn(code, ev =>{
+                codeUseTicket.value = code;
+                findedUseTicketDiv.classList.add("hidden");
+            }));
+        });
+    } else {
+        findedUseTicketDiv.classList.add("hidden");
     }
 });
 
@@ -193,18 +231,71 @@ addTicket.addEventListener("click", ev => {
         tempList.add_last(game, value);
     });
     if (code.length === 10 && !isNaN(numCode) && isAllOk) {
-        games.buyTicketLogs.addLogObj(persons.buyTicket(tempList, numCode, time));
+        games.buyTicketLogs.addLogObj(persons.buyTicket(tempList, numCode, time, buyCheck.checked));
         resetFormBuyTicket()
+    }else {
+        addTicketErrors.classList.remove("hidden");
     }
-
+});
+useTicketBtn.addEventListener("click", ev => {
+    let flagError = false
+    if(codeUseTicket.value && numberOfUseTickets.value) {
+        const number = Number(numberOfUseTickets.value)
+        const person = persons.findPerson(Number(codeUseTicket.value));
+        const game = games.findGame(useSelect.value);
+        if(person && game && !isNaN(number)){
+            flagError = !persons.useTicket(person, game, number, time);
+        }else {
+            flagError = true;
+        }
+    }else{
+        flagError = true;
+    }
+    if(flagError){
+        useErrors.classList.remove("hidden");
+    }else {
+        useErrors.classList.remove("hidden");
+        resetFormUseTicket();
+    }
 });
 closeBuyTicket.addEventListener("click", ev => {
-    buyTicket.classList.add("hidden");
     resetFormBuyTicket();
 })
+closeUseTicket.addEventListener("click", ev => {
+    resetFormUseTicket();
+})
+
+playGame.addEventListener("click", ev => {
+   useTicket.classList.remove("hidden");
+});
 
 
+showLast10.addEventListener("click", ev => {
+    showBest.classList.remove("hidden");
+    btnsShowBest.innerHTML = ""
+    let counter = 1;
+    persons.bestPerson.forEach(person => {
+        const btn = document.createElement("button");
+        btn.classList.add("btn");
+        btn.textContent = `${counter++}.${person.code}`;
+        btn.addEventListener("click", ev => {
+            showSecondDisplay(person.code, person);
+        });
+        btnsShowBest.appendChild(btn);
+    });
+});
+closeShowBest.addEventListener("click", ev => {
+    showBest.classList.add("hidden");
+});
 // Component
+function renderTime(){
+    let sec = time % 60;
+    let min = Math.floor(time / 60);
+    sec = sec < 10 ? `0${sec}` : sec
+    min = min < 10 ? `0${min}` : min
+    mainTimerDiv.textContent = `${min} : ${sec}`;
+}
+
 function makeGameBuyInp(item) {
     const divInp = document.createElement("div");
     divInp.classList.add("flex-row");
@@ -213,6 +304,13 @@ function makeGameBuyInp(item) {
     divInp.appendChild(labelInp);
     divInp.appendChild(item.inp);
     return divInp;
+}
+
+function makeOptionTag(name){
+    const opt = document.createElement("option");
+    opt.value = name;
+    opt.textContent = name;
+    return opt;
 }
 
 function makeGameBtn(item) {
@@ -268,6 +366,8 @@ function hiddenSecondDisplay() {
 }
 
 
+
+// Reset Forms
 function resetForm() {
     addBtn.textContent = "Add";
     errors.innerHTML = "";
@@ -293,5 +393,15 @@ function resetFormBuyTicket() {
     games.forEach((key, value) => {
         value.inp.value = "0";
     });
+    buyCheck.checked = false;
     buyTicket.classList.add("hidden");
+    addTicketErrors.classList.add("hidden");
+}
+
+function resetFormUseTicket() {
+    codeUseTicket.value = "";
+    findedUseTicketDiv.classList.add("hidden");
+    useTicket.classList.add("hidden");
+    useErrors.classList.add("hidden");
+    numberOfUseTickets.value = "";
 }

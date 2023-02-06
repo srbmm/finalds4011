@@ -28,8 +28,9 @@ class TrieTree {
 
     #search(root, res) {
         root.charecters.forEach((key, value) => {
-            res += key
+            res += key;
             this.#search(value, res);
+            res = res.substring(0, res.length - 1);
         });
         if (root.isEnd) this.findings.add_last(res);
     }
@@ -38,13 +39,11 @@ class TrieTree {
     search(key) {
         let crawl = this.root;
         let res = key;
-        console.log("key")
         for (let i = 0; i < key.length; i++) {
             if (!crawl.charecters.find(key[i]))
                 return undefined;
             crawl = crawl.charecters.find(key[i]);
         }
-        console.log(res)
         this.findings = new LinkedList();
         this.#search(crawl, res);
         const temp = this.findings;
